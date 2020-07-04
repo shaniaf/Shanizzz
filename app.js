@@ -16,13 +16,18 @@ selectList.id = "mySelect";
 myParent.appendChild(selectList);
 
 //Create and append the options
-for (var i = 0; i < array.length; i++) {
-    var option = document.createElement("option");
-    option.value = array[i];
-    option.text = array[i];
-    selectList.appendChild(option);
+
+const clearBt =  document.querySelector('.clear-tasks');
+const card_ =  document.querySelector('.card');
+const h5_ =  document.querySelector('h5');
+
+
+function runEvent1(e) {
+  console.log(`EVENT TYPE: ${e.type}`);
+  document.body.style.backgroundColor = `rgb(${e.offsetX}, ${e.offsetY}, 40)`;
 }
 
+card_.addEventListener('mousemove',runEvent1);
 
 
 
