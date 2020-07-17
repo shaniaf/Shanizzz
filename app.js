@@ -85,10 +85,13 @@ function storeTaskInLocalStorage(task) {
   let tasks;
   if(localStorage.getItem('tasks') === null){
     tasks = [];
+    console.log('tasks');
   } else {
     tasks = JSON.parse(localStorage.getItem('tasks'));
   }
-
+  console.log('tasks2');
+  console.log(tasks);
+  console.log('task', task);
   tasks.push(task);
 
   localStorage.setItem('tasks', JSON.stringify(tasks));
@@ -102,10 +105,25 @@ function removeTask(e) {
   if(e.target.parentElement.classList.contains('delete-item')) {
     if(confirm('Are You Sure?')) {
       e.target.parentElement.parentElement.remove();
+      removeElementFromLS(e.target.parentElement.parentElement);
     }
   }
 }
 
+function removeElementFromLS(taskItem){
+
+  let tasks;
+  if(localStorage.getItem('tasks') === null){
+    tasks = [];
+  } else {
+    tasks = JSON.parse(localStorage.getItem('tasks'));
+  }
+  tasks.forEach(function(task, index){
+        if (taskItem.textContent === task)
+        tasks.splice(index, 1);
+    });
+  localStorage.setItem('tasks', JSON.stringify(tasks));
+  }
 // Clear Tasks
 function clearTasks() {
   // taskList.innerHTML = '';
@@ -114,7 +132,9 @@ function clearTasks() {
   while(taskList.firstChild) {
     taskList.removeChild(taskList.firstChild);
   }
-
+  if(localStorage.getItem('tasks') != null){
+    localStorage.removeItem('tasks');
+  }
   // https://jsperf.com/innerhtml-vs-removechild
 }
 
